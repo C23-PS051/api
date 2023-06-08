@@ -14,9 +14,27 @@ from pathlib import Path
 import firebase_admin
 from firebase_admin import credentials
 
+from pathlib import Path
+import firebase_admin
+from firebase_admin import credentials
+import os
+import environ
+
+env = environ.Env()
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
 if not firebase_admin._apps:
-    cred = credentials.Certificate(os.environ['FIRESTORE']) 
-    firebase_admin.initialize_app(cred)
+    if os.getenv('GAE_APPLICATION', None):
+        # Run at Google App Engine server
+        cred = credentials.Certificate(os.getenv('FIRESTORE'))
+        firebase_admin.initialize_app(cred)
+    else:
+        # Run locally
+        cred = credentials.Certificate(os.path.join(BASE_DIR, env('FIRESTORE'))) 
+        firebase_admin.initialize_app(cred)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
