@@ -6,7 +6,7 @@ from firebase_admin import firestore
 
 class UserListAPIView(APIView):
     # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = []
 
     def get(self, request, user_id):
         db = firestore.client()

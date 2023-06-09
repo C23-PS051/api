@@ -8,7 +8,7 @@ from firebase_admin import firestore
 
 class CafeListAPIView(APIView):
     # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = []
 
     def get(self, request, cafe_id=None):
         if cafe_id is None:
