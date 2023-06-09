@@ -17,9 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from cafe_api import urls as cafe_urls
+from user_api import urls as user_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('cafes/', include(cafe_urls)),
+    path('users/', include(user_urls))
 ]
