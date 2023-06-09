@@ -6,4 +6,5 @@ from .views import (
 
 urlpatterns = [
     path('', CafeListAPIView.as_view()),
+    path('<str:cafe_id>', CafeListAPIView.as_view()),
 ]
