@@ -20,7 +20,6 @@ jobs:
           app_yaml_path: "app.yaml"
       - name: Install dependencies
         run: 
-          pip install -r requirements.txt
           python manage.py makemigrations
           python manage.py migrate
       - name: Google App Engine
