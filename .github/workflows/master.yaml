@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Generate creds
         run: |
-          touch app/.env
+          ls -al
           echo FIRESTORE=${FIRESTORE_PATH} >> app/.env
           echo ${FIRESTORE} >> app/${FIRESTORE_PATH}
         shell: bash
