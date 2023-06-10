@@ -13,6 +13,7 @@ jobs:
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
         with:
+          credentials_json: ${{ secrets.GCLOUD_GITHUB_CREDENTIALS }}
           service_account: 'capstone-p51-388015@appspot.gserviceaccount.com'
       - name: Replace secrets in Googles App Engine Deployment File
         uses: 73h/gae-app-yaml-replace-env-variables@v0.3
