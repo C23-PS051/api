@@ -22,7 +22,7 @@ jobs:
         uses: 'google-github-actions/get-secretmanager-secrets@v1'
         with:
           secrets: |-
-            firestore:capstone-p51-388015/firestore
+            firestore:capstone-p51-388015/FIRESTORE
       - name: Google App Engine
         uses: google-github-actions/deploy-appengine@v0.4.0
         env:
