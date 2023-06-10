@@ -3,10 +3,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
 from firebase_admin import firestore
+from rest_framework.permissions import IsAuthenticated
+from auth_api.authentication import FirebaseAuthentication
 
 class UserListAPIView(APIView):
     # add permission to check if user is authenticated
-    permission_classes = []
+    permission_classes = [ IsAuthenticated ]
+    authentication_classes = [ FirebaseAuthentication ]
 
     def get(self, request, user_id):
         db = firestore.client()

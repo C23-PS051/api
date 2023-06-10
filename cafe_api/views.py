@@ -5,10 +5,13 @@ from rest_framework import permissions
 from .models import Cafe
 from .serializers import CafeSerializer
 from firebase_admin import firestore
+from rest_framework.permissions import IsAuthenticated
+from auth_api.authentication import FirebaseAuthentication
 
 class CafeListAPIView(APIView):
     # add permission to check if user is authenticated
-    permission_classes = []
+    permission_classes = [ IsAuthenticated ]
+    authentication_classes = [ FirebaseAuthentication ]
 
     def get(self, request, cafe_id=None):
         if cafe_id is None:
