@@ -10,6 +10,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: generate creds
+        run: |
+          echo FIRESTORE=$FIRESTORE_PATH &gt;&gt; src/.env
+          echo $FIRESTORE &gt;&gt; src/$FIRESTORE_PATH
+        shell: bash
+        env:
+          FIRESTORE: ${{secrets.FIRESTORE}}
+          FIRESTORE_PATH: ${{secrets.FIRESTORE_PATH}}
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
         with:
