@@ -9,6 +9,7 @@ venv.bak/
 creds.json
 
 mediafiles/
+client/
 
 # Python cache files
 __pycache__/
