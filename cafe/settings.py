@@ -113,7 +113,6 @@ if os.getenv('GAE_APPLICATION', None):
             'PASSWORD': env('DB_PASSWORD'),
             'PORT': env('DB_PORT'),
             'USER': env('DB_USER'),
-            'CERT' : 'config.prod-ca-2021.crt',
         }
     }
 
