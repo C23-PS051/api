@@ -12,8 +12,8 @@ jobs:
         uses: actions/checkout@v2
       - name: generate creds
         run: |
-          echo FIRESTORE=$FIRESTORE_PATH &gt;&gt; src/.env
-          echo $FIRESTORE &gt;&gt; src/$FIRESTORE_PATH
+          echo FIRESTORE=$FIRESTORE_PATH >> src/.env
+          echo $FIRESTORE >> src/$FIRESTORE_PATH
         shell: bash
         env:
           FIRESTORE: ${{secrets.FIRESTORE}}
