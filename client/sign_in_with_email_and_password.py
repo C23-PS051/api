@@ -3,6 +3,9 @@ import json
 import os
 import requests
 import pprint
+from dotenv import load_dotenv
+
+load_dotenv()
 
 FIREBASE_WEB_API_KEY = os.getenv('FIREBASE_WEB_API_KEY')
 rest_api_url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword"
