@@ -103,6 +103,19 @@ DATABASES = {
     }
 }
 
+# Use prod db in production
+if os.getenv('GAE_APPLICATION', None):
+    DATABASES = {
+        'default' : {
+            'ENGINE' : 'django.db.backends.postgresql',
+            'NAME' : env('DB_NAME'),
+            'HOST' : env('DB_HOST'),
+            'PASSWORD': env('DB_PASSWORD'),
+            'PORT': env('DB_PORT'),
+            'USER': env('DB_USER'),
+            'CERT' : 'config.prod-ca-2021.crt',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
