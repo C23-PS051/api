@@ -20,6 +20,7 @@ from cafe_api import urls as cafe_urls
 from user_api import urls as user_urls
 from favorite_api import urls as favorite_urls
 from auth_api import urls as auth_urls
+from ml_api import urls as ml_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,5 +28,6 @@ urlpatterns = [
     path('cafes/', include(cafe_urls)),
     path('users/', include(user_urls)),
     path('favorites/', include(favorite_urls)),
-    path('auth/', include(auth_urls))
+    path('auth/', include(auth_urls)),
+    path('ml/', include(ml_urls)),
 ]

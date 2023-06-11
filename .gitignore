@@ -7,6 +7,7 @@ ENV/
 env.bak/
 venv.bak/
 creds.json
+*/creds.json
 
 mediafiles/
 

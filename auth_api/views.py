@@ -8,8 +8,6 @@ from auth_api.authentication import FirebaseAuthentication
 class TestAuthenticatedAPIView(APIView):
     permission_classes = [ IsAuthenticated ]
     authentication_classes = [ FirebaseAuthentication ]
-    """Here just add FirebaseAuthentication class in authentication_classes"""
-    authentication_classes = [FirebaseAuthentication]
 
     def get(self, request):
         return Response({"status": 200})
