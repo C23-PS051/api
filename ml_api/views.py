@@ -46,10 +46,10 @@ class RecommendationAPIView(APIView):
         response = requests.post(ML_API_URL, json=payload)
         response_dict = response.json()
 
-        result = {}
-        cafe_id = 1
+        result = []
         for val in response_dict["result"].values():
             res_cafe = {
+                "cafe_id": val["cafe_id"],
                 "address": val["alamat"],
                 "alcohol": val["is_alcohol"] == 1,
                 "closing_hour": 24 if val["is_24hrs"] == 1 else 22, # placeholder
@@ -75,8 +75,7 @@ class RecommendationAPIView(APIView):
                 "vip_room": val["is_vip_room"] == 1,
                 "wifi": val["is_wifi"],
             }
-            result[cafe_id] = res_cafe
-            cafe_id += 1
+            result.append(res_cafe)
         
         result_json = json.loads(json.dumps(result))
         response_data = {
@@ -85,4 +84,3 @@ class RecommendationAPIView(APIView):
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
-        
