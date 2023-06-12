@@ -18,12 +18,11 @@ class CafeListAPIView(APIView):
             db = firestore.client()
             cafes_ref = db.collection('cafes')
             cafes = cafes_ref.get()
-            cafes_data = {}
-            cafe_id = 1
+            cafes_data = []
             for cafe in cafes:
                 cafe_data = cafe.to_dict()
-                cafes_data[cafe_id] = cafe_data
-                cafe_id += 1
+                cafe_data["cafe_id"] = cafe.id
+                cafes_data.append(cafe_data)
         
             response_data = {
                 "status": 200,
@@ -37,6 +36,7 @@ class CafeListAPIView(APIView):
         
             if cafe.exists:
                 cafe_data = cafe.to_dict()
+                cafe_data["cafe_id"] = cafe.id
                 response_data = {
                     "status": 200,
                     "data": cafe_data
