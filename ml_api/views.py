@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from auth_api.authentication import FirebaseAuthentication
 import requests
 import os
+import json
 
 class RecommendationAPIView(APIView):
     # add permission to check if user is authenticated
@@ -42,12 +43,45 @@ class RecommendationAPIView(APIView):
             "new_vip_room": 1 if user["cafe_vip_room"] else 0
         }
 
-        res = requests.post(ML_API_URL, json=payload)
+        response = requests.post(ML_API_URL, json=payload)
+        response_dict = response.json()
 
-        print(res.text)
+        result = {}
+        cafe_id = 1
+        for val in response_dict["result"].values():
+            res_cafe = {
+                "address": val["alamat"],
+                "alcohol": val["is_alcohol"] == 1,
+                "closing_hour": 24 if val["is_24hrs"] == 1 else 22, # placeholder
+                "description": "lorem ipsum", # placeholder
+                "in_mall": val["is_in_mall"] == 1,
+                "indoor": val["is_indoor"] == 1,
+                "kid_friendly": val["is_kid_friendly"] == 1,
+                "live_music": val["is_live_music"] == 1,
+                "name": val["nama"],
+                "opening_hour": 0 if val["is_24hrs"] == 1 else 10, # placeholder
+                "outdoor": val["is_outdoor"] == 1,
+                "parking_area": val["is_parking_area"] == 1,
+                "pet_friendly": val["is_pet_friendly"] == 1,
+                "price_category": val["kategori_harga"],
+                "rating": val["rating"],
+                "region": val["region"],
+                "reservation": val["is_reservation"] == 1,
+                "review": val["review"],
+                "smoking_area": val["is_smoking_area"] == 1,
+                "takeaway": val["is_takeaway"] == 1,
+                "toilets": val["is_toilets"] == 1,
+                "thumbnail_url": "https://images.unsplash.com/photo-1685491107139-7d7f4f17b3eb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80",
+                "vip_room": val["is_vip_room"] == 1,
+                "wifi": val["is_wifi"],
+            }
+            result[cafe_id] = res_cafe
+            cafe_id += 1
+        
+        result_json = json.loads(json.dumps(result))
         response_data = {
             "status": 200,
-            "data": res.json()
+            "data": result_json
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
