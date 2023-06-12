@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Generate creds
         run: |
-          echo -e "FIRESTORE=${FIRESTORE_PATH}\nDB_HOST=${DB_HOST}\nDB_PORT=${DB_PORT}\nDB_USER=${DB_USER}\nDB_NAME=${DB_NAME}\nDB_PASSWORD=${DB_PASSWORD}\n" >> .env
+          echo -e "FIRESTORE=${FIRESTORE_PATH}\nDB_HOST=${DB_HOST}\nDB_PORT=${DB_PORT}\nDB_USER=${DB_USER}\nDB_NAME=${DB_NAME}\nDB_PASSWORD=${DB_PASSWORD}\nML_API_URL=${ML_API_URL}\n" >> .env
           echo ${FIRESTORE} >> ${FIRESTORE_PATH}
         shell: bash
         env:
@@ -23,6 +23,7 @@ jobs:
           DB_USER: ${{secrets.DB_USER}}
           DB_NAME: ${{secrets.DB_NAME}}
           DB_PASSWORD: ${{secrets.DB_PASSWORD}}
+          ML_API_URL: ${{secrets.ML_API_URL}}
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
         with:
