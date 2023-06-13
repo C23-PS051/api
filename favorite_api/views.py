@@ -12,6 +12,25 @@ class FavoriteListAPIView(APIView):
     permission_classes = [ IsAuthenticated ]
     authentication_classes = [ FirebaseAuthentication ]
 
+    def get(self, request):
+        db = firestore.client()
+        favorite_ref = db.collection('favorites')
+        cafe_ref = db.collection('cafes')
+        favorites = favorite_ref.get()
+        user_id = request.user.id
+        cafes_result=[]
+        
+        for favorite in favorites:
+            favorite_id = favorite.id
+            favorite_data = favorite.to_dict()
+            if str(favorite_data['user_id']) == str(user_id):
+                cafes_result.append(cafe_ref.document(favorite_data['cafe_id']).get().to_dict())
+        response_data = {
+            "result": cafes_result,
+            "status": 200,
+        }
+        return Response(response_data)
+
     def post(self, request):
         db = firestore.client()
         favorite_ref = db.collection('favorites').document()
