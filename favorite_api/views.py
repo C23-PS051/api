@@ -17,7 +17,7 @@ class FavoriteListAPIView(APIView):
         favorite_ref = db.collection('favorites')
         cafe_ref = db.collection('cafes')
         favorites = favorite_ref.get()
-        user_id = request.user.id
+        user_id = request.user.username
         cafes_result=[]
         
         for favorite in favorites:
