@@ -20,29 +20,36 @@ class RecommendationAPIView(APIView):
         user = db.collection('users').document(current_username).get().to_dict()
         
         ML_API_URL = os.getenv("ML_API_URL")
-        
+
+        # Placeholder/default code
         payload = {
             "new_user_id": current_username, 
             "new_is_male": 1, # placeholder
             "new_age_group": 1, # placeholder
-            "new_price_category": 1 if user["cafe_price_category"]=="$" else (2 if user["cafe_price_category"]=="$$" else 3),
+            "new_price_category": 1, # placeholder
             "new_24hrs": 1, # placeholder
-            "new_outdoor": 1 if user["cafe_outdoor"] else 0,
-            "new_smoking_area": 1 if user["cafe_smoking_area"] else 0,
-            "new_parking_area": 1 if user["cafe_parking_area"] else 0,
-            "new_pet_friendly": 1 if user["cafe_pet_friendly"] else 0,
-            "new_wifi": 1 if user["cafe_wifi"] else 0,
-            "new_indoor": 1 if user["cafe_indoor"] else 0,
-            "new_live_music": 1 if user["cafe_live_music"] else 0,
-            "new_takeaway": 1 if user["cafe_takeaway"] else 0,
-            "new_kid_friendly": 1 if user["cafe_kid_friendly"] else 0,
-            "new_alcohol": 1 if user["cafe_alcohol"] else 0,
-            "new_in_mall": 1 if user["cafe_in_mall"] else 0,
-            "new_toilets": 1 if user["cafe_toilets"] else 0,
-            "new_reservation": 1 if user["cafe_reservation"] else 0,
-            "new_vip_room": 1 if user["cafe_vip_room"] else 0
+            # "new_outdoor": 1 if user["cafe_outdoor"] else 0,
+            # "new_smoking_area": 1 if user["cafe_smoking_area"] else 0,
+            # "new_parking_area": 1 if user["cafe_parking_area"] else 0,
+            # "new_pet_friendly": 1 if user["cafe_pet_friendly"] else 0,
+            # "new_wifi": 1 if user["cafe_wifi"] else 0,
+            # "new_indoor": 1 if user["cafe_indoor"] else 0,
+            # "new_live_music": 1 if user["cafe_live_music"] else 0,
+            # "new_takeaway": 1 if user["cafe_takeaway"] else 0,
+            # "new_kid_friendly": 1 if user["cafe_kid_friendly"] else 0,
+            # "new_alcohol": 1 if user["cafe_alcohol"] else 0,
+            # "new_in_mall": 1 if user["cafe_in_mall"] else 0,
+            # "new_toilets": 1 if user["cafe_toilets"] else 0,
+            # "new_reservation": 1 if user["cafe_reservation"] else 0,
+            # "new_vip_room": 1 if user["cafe_vip_room"] else 0
         }
 
+        for pref in user["preferences"]:
+            key = "new_" + pref["first"].lower()
+            val = 1 if pref["second"] else 0
+            payload[key] = val
+
+        print(payload)
         response = requests.post(ML_API_URL, json=payload)
         response_dict = response.json()
 
@@ -73,7 +80,7 @@ class RecommendationAPIView(APIView):
                 "toilets": val["is_toilets"] == 1,
                 "thumbnail_url": "https://images.unsplash.com/photo-1685491107139-7d7f4f17b3eb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80",
                 "vip_room": val["is_vip_room"] == 1,
-                "wifi": val["is_wifi"],
+                "wifi": val["is_wifi"] == 1,
             }
             result.append(res_cafe)
         
