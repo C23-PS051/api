@@ -46,14 +46,12 @@ class FavoriteListAPIView(APIView):
         favorite_ref = db.collection('favorites')
         favorites = favorite_ref.get()
         favorites_data = {}
-        body_unicode = request.body.decode('utf-8')
-        json_body = json.loads(body_unicode)
 
         for favorite in favorites:
             favorite_id = favorite.id
             favorite_data = favorite.to_dict()
             favorites_data[favorite_id] = favorite_data
-            if favorite_data['cafe_id'] == json_body['cafe_id'] and favorite_data['user_id'] == json_body['user_id']:
+            if favorite_data['cafe_id'] == request.data['cafe_id'] and favorite_data['user_id'] == request.data['user_id']:
                 deleted_ref = db.collection('favorites').document(favorite_id)
                 response_data = {
                     "status": 200,
@@ -65,6 +63,3 @@ class FavoriteListAPIView(APIView):
                     "message": "not found",
                 }
         return Response(response_data)
-        
-        
-
