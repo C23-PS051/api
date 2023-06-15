@@ -1,4 +1,4 @@
-# Brewsccovery Web Server
+# Brewscovery Web Server
 
 REST-based web service as a hub, serving user request rapidly.
 
